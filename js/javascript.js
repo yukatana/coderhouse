@@ -1,6 +1,17 @@
 const count = parseInt(prompt("How many breeding rounds do you wish to calculate?"))
 let i = 0
 const calcHistory = []
+let motherBreeds
+let fatherBreeds
+let motherVIScost
+let fatherVIScost
+let totalVIScost
+let totalPGXcost
+let totalCost
+const motherPGXcost = 30
+const fatherPGXcost = 30
+
+//class for constructing search history objects to go into the array
 class Search{
     constructor(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost){
         this.motherBreeds = motherBreeds
@@ -15,13 +26,15 @@ class Search{
     }
 }
 
+//add to history function to be linked to a button
+function addToHistory()
+{
+    calcHistory.push(new Search(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost))
+}
+
 do{
-    let motherBreeds = parseInt(prompt("Enter mother's breed count:")) //link to list
-    let fatherBreeds = parseInt(prompt("Enter father's breed count:")) //link to list
-    let motherVIScost
-    let fatherVIScost
-    const motherPGXcost = 30
-    const fatherPGXcost = 30
+    motherBreeds = parseInt(prompt("Enter mother's breed count:")) //link to list
+    fatherBreeds = parseInt(prompt("Enter father's breed count:")) //link to list
 
     switch(motherBreeds)
     {
@@ -64,31 +77,22 @@ do{
     // maybe parseInt() all variables?
 
     //to be displayed under VIS cost:
-    const totalVIScost = motherVIScost + fatherVIScost
+    totalVIScost = motherVIScost + fatherVIScost
 
     //to be displayed under PGX cost:
-    const totalPGXcost = motherPGXcost + fatherPGXcost
+    totalPGXcost = motherPGXcost + fatherPGXcost
 
     //to be displayed in USD under total cost (needs API):
-    const totalCost = totalVIScost + totalPGXcost // each value to be multiplied by price fed through API
+    totalCost = totalVIScost + totalPGXcost // each value to be multiplied by price fed through API
     alert(`Total cost of breed:
     ${totalVIScost} VIS
     ${totalPGXcost} PGX`)
 
-    //object definition for search history:
-    function addToHistory() //add to history function to be linked to a button
-    {
-        calcHistory.push(new Search(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost))
-    }
     addToHistory() //adds every search to history automatically
 
     i++
 }
 while(count > i)
-
-
-
-
 
 console.table(calcHistory) //displays whole calc history as an array at the end of the cycle
 
