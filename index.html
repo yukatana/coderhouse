@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pegaxy breeding calculator</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/javascript.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav id="header" class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="index.html" class="pull-left">
+                        <div id="logo"></div>
+                    </a>
+                    <div class="navbar-brand">
+                        <a href="index.html"><h1>Pegaxy Breeding Calculator</h1></a>
+                    </div>      
+                </div>
+                <div>
+                    <ul id="nav-list" class="nav navbar-nav navbar-right">
+                        <li>
+                            <a class="" href="about.html">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div id="main-content" class="container-fluid">
+        <div id="interface" class="row">
+            <div class="col-sm-4">
+                <div class="pega-tile">
+                    <h3 class="text-center">Mother</h3><hr><br>
+                        <p class="text-center">Breed count:</p>
+                        <!-- insert breed count dropdown menu here -->
+                            <div class="dropdown text-center">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="mother-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Select breed count
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li>0</li>
+                                    <li>1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                    <li>5</li>
+                                    <li>6</li>
+                                    <li>7</li>
+                                </ul>
+                            </div>
+                        <br><p class="text-center">Kind:</p>
+                        <!-- insert kind dropdown menu here-->
+                        <div class="dropdown text-center">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="mother-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Select pega kind
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>Hoz</li>
+                                <li>Campona</li>
+                                <li>Klin</li>
+                                <li>Zan</li>
+                            </ul>
+                        </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div id="cost-display">
+                    <h3 class="text-center">Breeding cost:</h3>   
+                </div>
+                <h4 class="text-center">PGX cost:</h4>
+                    <div>
+                        <!-- insert PGX amount and icon -->
+                    </div>
+                <h4 class="text-center">VIS cost:</h4>
+                     <div>
+                        <!-- insert VIS amount and icon -->
+                    </div>
+                <h4 class="text-center">Total cost: </h4>
+                    <div>
+                        <!-- insert calculation results-->
+                    </div>
+                <h4 class="text-center">Pega type:</h4>
+                    <div><!-- insert pega type algorithm --></div>
+            </div>
+            <div class="col-sm-4">
+                <div class="pega-tile">
+                    <h3 class="text-center">Father</h3><hr><br>
+                        <p class="text-center">Breed count:</p>
+                        <!-- idem-->
+                        <div class="dropdown text-center">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="father-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Select breed count
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li>0</li>
+                                <li>1</li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                                <li>5</li>
+                                <li>6</li>
+                                <li>7</li>
+                            </ul>
+                        </div>
+                        <br><p class="text-center">Kind:</p>
+                        <!-- idem -->
+                        <div class="dropdown text-center">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="mother-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Select pega kind
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>Hoz</li>
+                                <li>Campona</li>
+                                <li>Klin</li>
+                                <li>Zan</li>
+                            </ul>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <footer class="panel-footer" id="footer-x">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="text-center">&copy; Yukatana 2022</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
