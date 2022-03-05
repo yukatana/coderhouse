@@ -14,6 +14,7 @@ const fatherPGXcost = 30
 //class for constructing search history objects to go into the array
 class Search{
     constructor(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost){
+        this.calcDate = new Date() //adds current date to every calculation
         this.motherBreeds = motherBreeds
         this.motherVIScost = motherVIScost
         this.motherPGXcost = motherPGXcost
@@ -94,7 +95,10 @@ do{
 }
 while(count > i)
 
-console.table(calcHistory) //displays whole calc history as an array at the end of the cycle
+console.table(calcHistory) //displays entire calc history as an array at the end of the cycle
+
+let sortedHistory = calcHistory
+console.table(sortedHistory.sort((a,b) => a.totalCost - b.totalCost)) //logs new array in ascending totalCost order
 
 //to be displayed under pega type (still needs writing):
 let bornPegaType
