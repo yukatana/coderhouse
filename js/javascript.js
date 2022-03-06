@@ -100,5 +100,18 @@ console.table(calcHistory) //displays entire calc history as an array at the end
 let sortedHistory = calcHistory
 console.table(sortedHistory.sort((a,b) => a.totalCost - b.totalCost)) //logs new array in ascending totalCost order
 
+function filterByDate() //logs new array containing desired search date. must be called manually
+{
+    let filterQuery = prompt("Enter calculation date to be filtered (i.e.: Jan 01):")
+    calcHistory.forEach(el => el.calcDate = el.calcDate.toString())
+    const filterResult = calcHistory.filter((el) => el.calcDate.includes(filterQuery))
+    console.table(filterResult)
+}
+
+function sumAll() //logs sum of all calculations from calcHistory, considering totalCost
+{
+    return calcHistory.reduce((acc, el) => acc + el.totalCost, 0)
+}
+
 //to be displayed under pega type (still needs writing):
 let bornPegaType
