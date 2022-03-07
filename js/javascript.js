@@ -75,8 +75,6 @@ do{
         default: alert("Please enter a valid breed count.")
     }
 
-    // maybe parseInt() all variables?
-
     //to be displayed under VIS cost:
     totalVIScost = motherVIScost + fatherVIScost
 
@@ -94,6 +92,21 @@ do{
     i++
 }
 while(count > i)
+
+//DOM:
+
+function init()
+{
+    const PGXCostTile = document.getElementById("PGXCostTile")
+    PGXCostTile.innerText =`${motherPGXcost} | ${fatherPGXcost}`
+    
+    const VISCostTile = document.getElementById("VISCostTile")
+    VISCostTile.innerText =`${motherVIScost} | ${fatherVIScost}`
+
+    const TotalCostTile = document.getElementById("TotalCostTile")
+    TotalCostTile.innerText =`${totalCost}`
+}
+
 
 console.table(calcHistory) //displays entire calc history as an array at the end of the cycle
 

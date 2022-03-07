@@ -69,6 +69,11 @@ nav > div {
     margin-bottom: 60px;
 }
 
+.btn-outline-secondary {
+    margin-top: 60px;
+    background-color: #c9356b25;
+}
+
 h3 {
     font-size: 1.6em;
 }

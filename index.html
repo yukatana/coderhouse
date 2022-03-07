@@ -15,7 +15,7 @@
     <script src="js/javascript.js"></script>
 </head>
 
-<body>
+<body onload="init()">
     <header>
         <nav id="header" class="navbar navbar-default">
             <div class="container-fluid">
@@ -44,7 +44,7 @@
                 <div class="pega-tile">
                     <h3 class="text-center">Mother</h3><hr><br>
                         <p class="text-center">Breed count:</p>
-                        <!-- insert breed count dropdown menu here -->
+                        <!-- breed count dropdown menu -->
                             <div class="dropdown text-center">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="mother-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     Select breed count
@@ -82,19 +82,21 @@
                     <h3 class="text-center">Breeding cost:</h3>   
                 </div>
                 <h4 class="text-center">PGX cost:</h4>
-                    <div>
+                    <div id="PGXCostTile" class="text-center">
                         <!-- insert PGX amount and icon -->
                     </div>
                 <h4 class="text-center">VIS cost:</h4>
-                     <div>
+                     <div id="VISCostTile" class="text-center">
                         <!-- insert VIS amount and icon -->
                     </div>
                 <h4 class="text-center">Total cost: </h4>
-                    <div>
+                    <div id="TotalCostTile" class="text-center">
                         <!-- insert calculation results-->
                     </div>
-                <h4 class="text-center">Pega type:</h4>
+                <h4 class="text-center">Pega kind:</h4>
                     <div><!-- insert pega type algorithm --></div>
+                    <button type="button" class="btn btn-outline-secondary">Calculate</button>
+                    <button type="button" class="btn btn-outline-secondary">Save to history</button>
             </div>
             <div class="col-sm-4">
                 <div class="pega-tile">
