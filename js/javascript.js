@@ -1,5 +1,17 @@
-const count = parseInt(prompt("How many breeding rounds do you wish to calculate?"))
-let i = 0
+function init(){
+    loadDOM()
+    loadButtons()
+}
+
+function calculateBtnFunction(){
+    calculate()
+    loadDOM()
+}
+
+function addToHistoryBtnFunction(){
+    addToHistory()
+}
+
 const calcHistory = []
 let motherBreeds
 let fatherBreeds
@@ -10,6 +22,9 @@ let totalPGXcost
 let totalCost
 const motherPGXcost = 30
 const fatherPGXcost = 30
+let motherKind
+let fatherKind
+let bornPegaKind
 
 //class for constructing search history objects to go into the array
 class Search{
@@ -27,15 +42,12 @@ class Search{
     }
 }
 
-//add to history function to be linked to a button
-function addToHistory()
-{
-    calcHistory.push(new Search(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost))
-}
-
-do{
-    motherBreeds = parseInt(prompt("Enter mother's breed count:")) //link to list
-    fatherBreeds = parseInt(prompt("Enter father's breed count:")) //link to list
+function calculate(){
+    //Cost calculation:
+    let motherBreedSelect = document.getElementById("motherBreedSelect")
+    motherBreeds = parseInt(motherBreedSelect.value)
+    let fatherBreedSelect = document.getElementById("fatherBreedSelect")
+    fatherBreeds = parseInt(fatherBreedSelect.value)
 
     switch(motherBreeds)
     {
@@ -54,8 +66,8 @@ do{
         case 6: motherVIScost=42000
         break;
         default: alert("Please enter a valid breed count.")
+        motherVIScost = "Invalid breed count"
     }
-
     switch(fatherBreeds)
     {
         case 0: fatherVIScost=2000
@@ -73,39 +85,137 @@ do{
         case 6: fatherVIScost=42000
         break;
         default: alert("Please enter a valid breed count.")
+        fatherVIScost = "Invalid breed count"
     }
 
     //to be displayed under VIS cost:
-    totalVIScost = motherVIScost + fatherVIScost
+    if (!isNaN(motherVIScost) || !isNaN(fatherVIScost))
+    {
+        totalVIScost = motherVIScost + fatherVIScost
+    }
+    else
+    {
+        totalVIScost = "Invalid breed count."
+    }
 
     //to be displayed under PGX cost:
     totalPGXcost = motherPGXcost + fatherPGXcost
 
     //to be displayed in USD under total cost (needs API):
-    totalCost = totalVIScost + totalPGXcost // each value to be multiplied by price fed through API
-    alert(`Total cost of breed:
-    ${totalVIScost} VIS
-    ${totalPGXcost} PGX`)
+    if (!isNaN(motherVIScost) && !isNaN(fatherVIScost))
+    {
+        totalCost = totalVIScost + totalPGXcost // each value to be multiplied by price fed through API
+    }
+    else
+    {
+        totalCost = "Invalid calculation"
+    }
 
-    addToHistory() //adds every search to history automatically
+    // Kind calculation:
+    let motherKindSelect = document.getElementById("motherKindSelect")
+    motherKind = motherKindSelect.value
+    let fatherKindSelect = document.getElementById("fatherKindSelect")
+    fatherKind = fatherKindSelect.value
 
-    i++
+    if(fatherKind != "Select pega kind" && motherKind != "Select pega kind") {
+        switch (motherKind) {
+            case "Hoz": if (fatherKind === "Hoz") {
+                bornPegaKind = "Hoz"
+            }
+            else {
+                bornPegaKind = fatherKind
+            }
+            break;
+            case "Campona": if (fatherKind === "Hoz" || fatherKind === "Campona") {
+                bornPegaKind = "Campona"
+            }
+            else {
+                bornPegaKind = fatherKind
+            }
+            break;
+            case "Klin": if (fatherKind === "Hoz" || fatherKind === "Campona" || fatherKind === "Klin") {
+                bornPegaKind = "Klin"
+            }
+            else {
+                bornPegaKind = fatherKind
+            }
+            break;
+            case "Zan": bornPegaKind = "Zan"
+            break;
+        }
+    }
+    else {
+        bornPegaKind = "-"
+        alert("Please select parent pega kinds.")
+    }
 }
-while(count > i)
+
+function addToHistory() //will use JSON in order to save calcHistory to localStorage
+{
+    if (!isNaN(totalCost))
+    {
+        calcHistory.push(new Search(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost))
+        alert("Save successful!")
+    }
+    else
+    {
+        alert("You cannot save an invalid breed count.")
+    }
+    
+}
+
 
 //DOM:
 
-function init()
+function loadDOM()
 {
-    const PGXCostTile = document.getElementById("PGXCostTile")
-    PGXCostTile.innerText =`${motherPGXcost} | ${fatherPGXcost}`
-    
-    const VISCostTile = document.getElementById("VISCostTile")
-    VISCostTile.innerText =`${motherVIScost} | ${fatherVIScost}`
+    if (motherBreeds !== undefined || fatherBreeds !== undefined)
+    {  
+        const PGXCostTile = document.getElementById("PGXCostTile")
+        PGXCostTile.innerText =`${motherPGXcost} | ${fatherPGXcost}`
 
-    const TotalCostTile = document.getElementById("TotalCostTile")
-    TotalCostTile.innerText =`${totalCost}`
+        const VISCostTile = document.getElementById("VISCostTile")
+        VISCostTile.innerText =`${motherVIScost} | ${fatherVIScost}`
+
+        const totalCostTile = document.getElementById("totalCostTile")
+        totalCostTile.innerText =`${totalCost}`
+
+        const pegaKindTile = document.getElementById("pegaKindTile")
+        pegaKindTile.innerText = `${bornPegaKind}`
+    }
+    else //this is the inital DOM load, since motherBreeds and fatherBreeds won't return undefined but rather NaN upon calculation
+    {
+        const PGXCostTile = document.getElementById("PGXCostTile")
+        PGXCostTile.innerText =`${motherPGXcost} | ${fatherPGXcost}`
+
+        const VISCostTile = document.getElementById("VISCostTile")
+        VISCostTile.innerText =`0`
+
+        const TotalCostTile = document.getElementById("totalCostTile")
+        TotalCostTile.innerText =`0`
+
+        const pegaKindTile = document.getElementById("pegaKindTile")
+        pegaKindTile.innerText = `-`
+    }
 }
+
+//Button events:
+
+let calculateBtn
+let addToHistoryBtn
+
+function loadButtons(){
+calculateBtn = document.getElementById("calculateBtn")
+addToHistoryBtn = document.getElementById("addToHistoryBtn")
+
+calculateBtn.onclick = () => {calculateBtnFunction()}
+addToHistoryBtn.onclick = () => {addToHistoryBtnFunction()}
+}
+
+
+
+
+
 
 
 console.table(calcHistory) //displays entire calc history as an array at the end of the cycle
@@ -126,5 +236,4 @@ function sumAll() //logs sum of all calculations from calcHistory, considering t
     return calcHistory.reduce((acc, el) => acc + el.totalCost, 0)
 }
 
-//to be displayed under pega type (still needs writing):
-let bornPegaType
+//to be displayed under pega kind (still needs writing):

@@ -44,37 +44,25 @@
                 <div class="pega-tile">
                     <h3 class="text-center">Mother</h3><hr><br>
                         <p class="text-center">Breed count:</p>
-                        <!-- breed count dropdown menu -->
-                            <div class="dropdown text-center">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="mother-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Select breed count
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li>0</li>
-                                    <li>1</li>
-                                    <li>2</li>
-                                    <li>3</li>
-                                    <li>4</li>
-                                    <li>5</li>
-                                    <li>6</li>
-                                    <li>7</li>
-                                </ul>
-                            </div>
+                        <select id= "motherBreedSelect" class="form-select form-select-sm">
+                            <option selected>Select breed count</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
                         <br><p class="text-center">Kind:</p>
                         <!-- insert kind dropdown menu here-->
-                        <div class="dropdown text-center">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="mother-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Select pega kind
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li>Hoz</li>
-                                <li>Campona</li>
-                                <li>Klin</li>
-                                <li>Zan</li>
-                            </ul>
-                        </div>
+                        <select id="motherKindSelect" class="form-select form-select-sm">
+                            <option selected>Select pega kind</option>
+                            <option value="Hoz">Hoz</option>
+                            <option value="Campona">Campona</option>
+                            <option value="Klin">Klin</option>
+                            <option value="Zan">Zan</option>
+                        </select>
                 </div>
             </div>
             <div class="col-sm-4">
@@ -90,51 +78,40 @@
                         <!-- insert VIS amount and icon -->
                     </div>
                 <h4 class="text-center">Total cost: </h4>
-                    <div id="TotalCostTile" class="text-center">
+                    <div id="totalCostTile" class="text-center">
                         <!-- insert calculation results-->
                     </div>
                 <h4 class="text-center">Pega kind:</h4>
-                    <div><!-- insert pega type algorithm --></div>
-                    <button type="button" class="btn btn-outline-secondary">Calculate</button>
-                    <button type="button" class="btn btn-outline-secondary">Save to history</button>
+                    <div id="pegaKindTile" class="text-center"><!-- insert pega type algorithm --></div>
+                <div class="text-center">
+                    <button id="calculateBtn" type="button" class="btn btn-outline-secondary">Calculate</button>
+                    <button id="addToHistoryBtn" type="button" class="btn btn-outline-secondary">Save to history</button>
+                </div>
             </div>
             <div class="col-sm-4">
                 <div class="pega-tile">
                     <h3 class="text-center">Father</h3><hr><br>
                         <p class="text-center">Breed count:</p>
-                        <!-- idem-->
-                        <div class="dropdown text-center">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="father-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Select breed count
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <li>0</li>
-                                <li>1</li>
-                                <li>2</li>
-                                <li>3</li>
-                                <li>4</li>
-                                <li>5</li>
-                                <li>6</li>
-                                <li>7</li>
-                            </ul>
-                        </div>
+                        <select id="fatherBreedSelect" class="form-select form-select-sm">
+                            <option selected>Select breed count</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
                         <br><p class="text-center">Kind:</p>
                         <!-- idem -->
-                        <div class="dropdown text-center">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="mother-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Select pega kind
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li>Hoz</li>
-                                <li>Campona</li>
-                                <li>Klin</li>
-                                <li>Zan</li>
-                            </ul>
-                        </div>
+                        <select id="fatherKindSelect" class="form-select form-select-sm">
+                            <option selected>Select pega kind</option>
+                            <option value="Hoz">Hoz</option>
+                            <option value="Campona">Campona</option>
+                            <option value="Klin">Klin</option>
+                            <option value="Zan">Zan</option>
+                        </select>
                 </div>
-
             </div>
         </div>
     </div>
@@ -150,3 +127,5 @@
     </footer>
 </body>
 </html>
+
+<!-- <select><option value=“LOQUEVALEELCAMPO”>LOQUEVEELUSUARIO</option> </select> -->
