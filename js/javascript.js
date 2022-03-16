@@ -12,7 +12,7 @@ function addToHistoryBtnFunction(){
     addToHistory()
 }
 
-const calcHistory = []
+const calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || []
 let motherBreeds
 let fatherBreeds
 let motherVIScost
@@ -29,7 +29,7 @@ let bornPegaKind
 //class for constructing search history objects to go into the array
 class Search{
     constructor(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost){
-        this.calcDate = new Date() //adds current date to every calculation
+        this.calcDate = new Date //adds current date to every calculation
         this.motherBreeds = motherBreeds
         this.motherVIScost = motherVIScost
         this.motherPGXcost = motherPGXcost
@@ -65,8 +65,7 @@ function calculate(){
         break;
         case 6: motherVIScost=42000
         break;
-        default: alert("Please enter a valid breed count.")
-        motherVIScost = "Invalid breed count"
+        default: motherVIScost = "Invalid breed count"
     }
     switch(fatherBreeds)
     {
@@ -84,8 +83,7 @@ function calculate(){
         break;
         case 6: fatherVIScost=42000
         break;
-        default: alert("Please enter a valid breed count.")
-        fatherVIScost = "Invalid breed count"
+        default: fatherVIScost = "Invalid breed count"
     }
 
     //to be displayed under VIS cost:
@@ -145,28 +143,38 @@ function calculate(){
         }
     }
     else {
-        bornPegaKind = "-"
-        alert("Please select parent pega kinds.")
+        bornPegaKind = "Please, select parent pega kinds"
     }
 }
 
+
+//Add to history button:
 function addToHistory() //will use JSON in order to save calcHistory to localStorage
 {
+    const messageContainer = document.getElementById("messageContainer")
+    messageContainer.innerHTML = ""
+
     if (!isNaN(totalCost))
     {
         calcHistory.push(new Search(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost))
-        alert("Save successful!")
+        localStorage.setItem("calcHistory", JSON.stringify(calcHistory))
+
+        const message = document.createElement("p")
+        message.innerHTML = "<br>Save successful!"
+        messageContainer.appendChild(message)
+        setTimeout(() => message.style.display = "none", 2000)
     }
     else
     {
-        alert("You cannot save an invalid breed count.")
+        const message = document.createElement("p")
+        message.innerHTML = "<br>You cannot save an invalid breed count!"
+        messageContainer.appendChild(message)
+        setTimeout(() => message.style.display = "none", 2000)
     }
-    
 }
 
 
-//DOM:
-
+//Calculation DOM display:
 function loadDOM()
 {
     if (motherBreeds !== undefined || fatherBreeds !== undefined)
@@ -183,7 +191,7 @@ function loadDOM()
         const pegaKindTile = document.getElementById("pegaKindTile")
         pegaKindTile.innerText = `${bornPegaKind}`
     }
-    else //this is the inital DOM load, since motherBreeds and fatherBreeds won't return undefined but rather NaN upon calculation
+    else //this is the inital DOM load
     {
         const PGXCostTile = document.getElementById("PGXCostTile")
         PGXCostTile.innerText =`${motherPGXcost} | ${fatherPGXcost}`
@@ -205,13 +213,49 @@ let calculateBtn
 let addToHistoryBtn
 
 function loadButtons(){
-calculateBtn = document.getElementById("calculateBtn")
-addToHistoryBtn = document.getElementById("addToHistoryBtn")
+    calculateBtn = document.getElementById("calculateBtn")
+    addToHistoryBtn = document.getElementById("addToHistoryBtn")
 
-calculateBtn.onclick = () => {calculateBtnFunction()}
-addToHistoryBtn.onclick = () => {addToHistoryBtnFunction()}
+    calculateBtn.onclick = () => {calculateBtnFunction()}
+    addToHistoryBtn.onclick = () => {addToHistoryBtnFunction()}
 }
 
+//History page:
+function createTable() {
+    const tableContainer = document.getElementById("calcHistoryTable")
+    const table = document.createElement("table")
+    table.className = "table"
+    table.innerHTML =
+    `<thead>
+      <tr>
+        <th>Date</th>
+        <th>Mother breeds</th>
+        <th>Mother VIS cost</th>
+        <th>Father breeds</th>
+        <th>Father VIS cost</th>
+        <th>PGX cost</th>
+        <th>Total cost</th>
+      </tr>
+     </thead>`
+    tableContainer.append(table)
+
+    if (calcHistory.length > 0) {
+        calcHistory.forEach((el) => {
+        row = table.insertRow()
+        row.insertCell().innerHTML =`${el.calcDate.substr(0, 10)}`
+        row.insertCell().innerHTML =`${el.motherBreeds}`
+        row.insertCell().innerHTML =`${el.motherVIScost}`
+        row.insertCell().innerHTML =`${el.fatherBreeds}`
+        row.insertCell().innerHTML =`${el.fatherVIScost}`
+        row.insertCell().innerHTML =`${el.totalPGXcost}`
+        row.insertCell().innerHTML =`${el.totalCost}`})
+    }
+    else{
+        let emptyHistoryMessage = document.createElement("p")
+        emptyHistoryMessage.innerHTML = "<h3 class='text-center'> Nothing to see here... Yet!</h3>"
+        tableContainer.appendChild(emptyHistoryMessage)
+    }
+}
 
 
 

@@ -24,14 +24,18 @@
                         <div id="logo"></div>
                     </a>
                     <div class="navbar-brand">
-                        <a href="index.html"><h1>Pegaxy Breeding Calculator</h1></a>
+                        <a id="pageTitle" href="index.html"><h1>Pegaxy Breeding Calculator</h1></a>
                     </div>      
                 </div>
                 <div>
                     <ul id="nav-list" class="nav navbar-nav navbar-right">
                         <li>
+                            <a href="calchistory.html">History</a>
+                        </li>
+                        <li>
                             <a class="" href="about.html">About</a>
                         </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -83,9 +87,10 @@
                     </div>
                 <h4 class="text-center">Pega kind:</h4>
                     <div id="pegaKindTile" class="text-center"><!-- insert pega type algorithm --></div>
-                <div class="text-center">
+                <div id="buttonsTile" class="text-center">
                     <button id="calculateBtn" type="button" class="btn btn-outline-secondary">Calculate</button>
                     <button id="addToHistoryBtn" type="button" class="btn btn-outline-secondary">Save to history</button>
+                    <div id="messageContainer"></div>
                 </div>
             </div>
             <div class="col-sm-4">

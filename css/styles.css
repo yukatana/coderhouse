@@ -3,20 +3,21 @@ body {
     font-family: 'Ubuntu', sans-serif;
 }
 
+#pageTitle:hover {
+    text-decoration: none;
+}
+
 #header {
     background-color: #c9356c;
     border: 0;
     border-radius: 0;
+    padding-right: 50px;
+    padding-left: 50px;
 }
 
 #logo {
     height: 90px;
     width: 90px;
-}
-
-#header {
-    padding-right: 50px;
-    padding-left: 50px;
 }
 
 #nav-list li a {
@@ -101,4 +102,19 @@ footer p {
     color: white;
     padding-top: 5px;
     font-size: 1.1em;
+}
+
+/* CALC HISTORY TABLE */
+#calcHistoryTable {
+    height: 515px;
+}
+
+/* ABOUT */
+.aboutTile img {
+    width: 100%;
+}
+
+#aboutDisclaimer {
+    margin-top: 50px;
+    margin-bottom: 70px;
 }
