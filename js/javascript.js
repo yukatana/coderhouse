@@ -12,7 +12,15 @@ function addToHistoryBtnFunction(){
     addToHistory()
 }
 
-const calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || []
+function deleteHistoryButtonFunction() {
+    calcHistory = []
+    localStorage.clear()
+    const tableContainer = document.getElementById("calcHistoryTable")
+    tableContainer.innerHTML = ""
+    createTable() //loads empty history table message
+}
+
+let calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || []
 let motherBreeds
 let fatherBreeds
 let motherVIScost
@@ -87,27 +95,12 @@ function calculate(){
     }
 
     //to be displayed under VIS cost:
-    if (!isNaN(motherVIScost) || !isNaN(fatherVIScost))
-    {
-        totalVIScost = motherVIScost + fatherVIScost
-    }
-    else
-    {
-        totalVIScost = "Invalid breed count."
-    }
-
+    !isNaN(motherVIScost) && !isNaN(fatherVIScost) ? totalVIScost = motherVIScost + fatherVIScost : totalVIScost = "Invalid breed count."
     //to be displayed under PGX cost:
     totalPGXcost = motherPGXcost + fatherPGXcost
 
     //to be displayed in USD under total cost (needs API):
-    if (!isNaN(motherVIScost) && !isNaN(fatherVIScost))
-    {
-        totalCost = totalVIScost + totalPGXcost // each value to be multiplied by price fed through API
-    }
-    else
-    {
-        totalCost = "Invalid calculation"
-    }
+    !isNaN(motherVIScost) && !isNaN(fatherVIScost) ? totalCost = totalVIScost + totalPGXcost : totalCost = "Invalid calculation"
 
     // Kind calculation:
     let motherKindSelect = document.getElementById("motherKindSelect")
@@ -115,7 +108,7 @@ function calculate(){
     let fatherKindSelect = document.getElementById("fatherKindSelect")
     fatherKind = fatherKindSelect.value
 
-    if(fatherKind != "Select pega kind" && motherKind != "Select pega kind") {
+    if((fatherKind != "Select pega kind") && motherKind != "Select pega kind") {
         switch (motherKind) {
             case "Hoz": if (fatherKind === "Hoz") {
                 bornPegaKind = "Hoz"
@@ -143,7 +136,7 @@ function calculate(){
         }
     }
     else {
-        bornPegaKind = "Please, select parent pega kinds"
+        bornPegaKind = "Please, select parent pega kinds."
     }
 }
 
@@ -242,13 +235,25 @@ function createTable() {
     if (calcHistory.length > 0) {
         calcHistory.forEach((el) => {
         row = table.insertRow()
-        row.insertCell().innerHTML =`${el.calcDate.substr(0, 10)}`
-        row.insertCell().innerHTML =`${el.motherBreeds}`
-        row.insertCell().innerHTML =`${el.motherVIScost}`
-        row.insertCell().innerHTML =`${el.fatherBreeds}`
-        row.insertCell().innerHTML =`${el.fatherVIScost}`
-        row.insertCell().innerHTML =`${el.totalPGXcost}`
-        row.insertCell().innerHTML =`${el.totalCost}`})
+        row.insertCell().innerHTML =`${el?.calcDate.substr(0, 10)} ${el?.calcDate.substr(11,5)}`
+        row.insertCell().innerHTML =`${el?.motherBreeds}`
+        row.insertCell().innerHTML =`${el?.motherVIScost}`
+        row.insertCell().innerHTML =`${el?.fatherBreeds}`
+        row.insertCell().innerHTML =`${el?.fatherVIScost}`
+        row.insertCell().innerHTML =`${el?.totalPGXcost}`
+        row.insertCell().innerHTML =`${el?.totalCost}`})
+
+        const deleteHistoryButtonContainer = document.createElement("div")
+            deleteHistoryButtonContainer.className ="text-center"
+
+        const deleteHistoryButton = document.createElement("button")
+            deleteHistoryButton.className = "btn btn-outline-secondary"
+            deleteHistoryButton.type = "button"
+            deleteHistoryButton.innerText = "Delete history"
+
+        deleteHistoryButton.onclick = () => deleteHistoryButtonFunction()
+        tableContainer.appendChild(deleteHistoryButtonContainer)
+        deleteHistoryButtonContainer.appendChild(deleteHistoryButton)  
     }
     else{
         let emptyHistoryMessage = document.createElement("p")
@@ -270,14 +275,12 @@ console.table(sortedHistory.sort((a,b) => a.totalCost - b.totalCost)) //logs new
 function filterByDate() //logs new array containing desired search date. must be called manually
 {
     let filterQuery = prompt("Enter calculation date to be filtered (i.e.: Jan 01):")
-    calcHistory.forEach(el => el.calcDate = el.calcDate.toString())
-    const filterResult = calcHistory.filter((el) => el.calcDate.includes(filterQuery))
+    calcHistory.forEach(el => el.calcDate = el?.calcDate.toString())
+    const filterResult = calcHistory.filter((el) => el?.calcDate.includes(filterQuery))
     console.table(filterResult)
 }
 
 function sumAll() //logs sum of all calculations from calcHistory, considering totalCost
 {
-    return calcHistory.reduce((acc, el) => acc + el.totalCost, 0)
+    return calcHistory.reduce((acc, el) => acc + el?.totalCost, 0)
 }
-
-//to be displayed under pega kind (still needs writing):
