@@ -112,8 +112,10 @@ footer p {
 
 /* CALC HISTORY TABLE */
 #calcHistoryTable {
-    height: 515px;
+    min-height: 515px;
 }
+
+
 
 /* ABOUT */
 .aboutTile img {

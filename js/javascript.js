@@ -13,11 +13,29 @@ function addToHistoryBtnFunction(){
 }
 
 function deleteHistoryButtonFunction() {
-    calcHistory = []
-    localStorage.clear()
-    const tableContainer = document.getElementById("calcHistoryTable")
-    tableContainer.innerHTML = ""
-    createTable() //loads empty history table message
+    Swal.fire({
+        title: "Are you sure you want to delete your search history?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            calcHistory = []
+            localStorage.clear()
+            const tableContainer = document.getElementById("calcHistoryTable")
+            tableContainer.innerHTML = ""
+            createTable() //loads empty history table message
+
+            Swal.fire({
+                title: "Your history has been deleted!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        }
+    })
+
 }
 
 let calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || []
@@ -96,11 +114,32 @@ function calculate(){
 
     //to be displayed under VIS cost:
     !isNaN(motherVIScost) && !isNaN(fatherVIScost) ? totalVIScost = motherVIScost + fatherVIScost : totalVIScost = "Invalid breed count."
+
     //to be displayed under PGX cost:
     totalPGXcost = motherPGXcost + fatherPGXcost
 
     //to be displayed in USD under total cost (needs API):
-    !isNaN(motherVIScost) && !isNaN(fatherVIScost) ? totalCost = totalVIScost + totalPGXcost : totalCost = "Invalid calculation"
+    !isNaN(motherVIScost) && !isNaN(fatherVIScost) ? totalCost = totalVIScost + totalPGXcost : totalCost = "Invalid calculation" 
+
+    //in case of invalid calculation:
+    isNaN(motherVIScost) || isNaN(fatherVIScost) ? Toastify({
+        text: "Invalid calculation!",
+        duration: 2000,
+        gravity: "bottom",
+        position: "center",
+        stopOnFocus: true,
+        style: {background: "#c9356c"},
+        offset: {y: 65}
+      }).showToast() :
+      Toastify({
+        text: "Calculation successful",
+        duration: 2000,
+        gravity: "bottom",
+        position: "center",
+        stopOnFocus: true,
+        style: {background: "#c9356c"},
+        offset: {y: 65}
+      }).showToast();
 
     // Kind calculation:
     let motherKindSelect = document.getElementById("motherKindSelect")
@@ -152,17 +191,27 @@ function addToHistory() //will use JSON in order to save calcHistory to localSto
         calcHistory.push(new Search(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost))
         localStorage.setItem("calcHistory", JSON.stringify(calcHistory))
 
-        const message = document.createElement("p")
-        message.innerHTML = "<br>Save successful!"
-        messageContainer.appendChild(message)
-        setTimeout(() => message.style.display = "none", 2000)
+        Toastify({
+            text: "Save successful!",
+            duration: 2000,
+            gravity: "bottom",
+            position: "center",
+            stopOnFocus: true,
+            style: {background: "#c9356c"},
+            offset: {y: 65}
+          }).showToast();
     }
     else
     {
-        const message = document.createElement("p")
-        message.innerHTML = "<br>You cannot save an invalid breed count!"
-        messageContainer.appendChild(message)
-        setTimeout(() => message.style.display = "none", 2000)
+        Toastify({
+            text: "You cannot save an invalid breed count!",
+            duration: 2000,
+            gravity: "bottom",
+            position: "center",
+            stopOnFocus: true,
+            style: {background: "#c9356c"},
+            offset: {y: 65}
+          }).showToast();
     }
 }
 
