@@ -12,10 +12,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/coingeckoAPI.js"></script>
     <script src="js/javascript.js"></script>
 </head>
 
-<body>
+<body onload="aboutinit()">
     <header>
         <nav id="header" class="navbar navbar-default">
             <div class="container-fluid">
@@ -32,12 +33,19 @@
                 <div>
                     <ul id="nav-list" class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="calchistory.html">History</a>
+                            <img class="coinImage" src="https://assets.coingecko.com/coins/images/21245/small/VIS.PNG?1638768736">
+                            <div id="VISpriceUSD"></div>
                         </li>
                         <li>
-                            <a href="about.html">About</a>
+                            <img class="coinImage" src="https://s2.coinmarketcap.com/static/img/coins/64x64/13030.png">
+                            <div id="PGXpriceUSD"></div>
                         </li>
-                        
+                        <li>
+                            <a href="calchistory.html" class="internalLink">History</a>
+                        </li>
+                        <li>
+                            <a href="about.html" class="internalLink">About</a>
+                        </li>
                     </ul>
                 </div>
             </div>

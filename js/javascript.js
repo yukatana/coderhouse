@@ -1,6 +1,7 @@
-function init(){
+function calcinit(){
     loadDOM()
     loadButtons()
+    getPrices()
 }
 
 function calculateBtnFunction(){
@@ -263,6 +264,11 @@ function loadButtons(){
 }
 
 //History page:
+function historyinit() {
+    createTable()
+    getPrices()
+}
+
 function createTable() {
     const tableContainer = document.getElementById("calcHistoryTable")
     const table = document.createElement("table")
@@ -311,15 +317,20 @@ function createTable() {
     }
 }
 
-
+//About page:
+function aboutinit() {
+    getPrices()
+}
 
 
 
 
 console.table(calcHistory) //displays entire calc history as an array at the end of the cycle
 
-let sortedHistory = calcHistory
-console.table(sortedHistory.sort((a,b) => a.totalCost - b.totalCost)) //logs new array in ascending totalCost order
+//logs new array in ascending totalCost order
+
+// let sortedHistory = calcHistory
+// console.table(sortedHistory.sort((a,b) => a.totalCost - b.totalCost)) 
 
 function filterByDate() //logs new array containing desired search date. must be called manually
 {

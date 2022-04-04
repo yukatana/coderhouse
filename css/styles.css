@@ -26,10 +26,25 @@ body {
     width: 80px;
 }
 
-#nav-list li a {
+.coinImage {
+    height: 55px;
+    width: 55px;
+    margin-top: 20px;
+    float: left;
+}
+
+#VISpriceUSD, #PGXpriceUSD {
+    width: 200px;
+    text-align: left;
+    color: #ececec;
+    font-size: 2em;
+    margin-top: 28px;
+}
+
+#nav-list > li > a {
     color: #ececec;
     font-size: 1.6em;
-    margin-top: 30px;
+    margin-top: 25px;
     margin-right: 15px;
 }
 nav > div {
@@ -38,6 +53,7 @@ nav > div {
 
 .navbar-brand h1 {
     color: #ececec;
+    margin-top: 12px;
 }
 
 #nav-list a {

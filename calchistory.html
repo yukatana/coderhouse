@@ -13,10 +13,11 @@
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/coingeckoAPI.js"></script>
     <script src="js/javascript.js"></script>
 </head>
 
-<body onload="createTable()">
+<body onload="historyinit()">
     <header>
         <nav id="header" class="navbar navbar-default">
             <div class="container-fluid">
@@ -32,6 +33,14 @@
                 </div>
                 <div>
                     <ul id="nav-list" class="nav navbar-nav navbar-right">
+                        <li>
+                            <img class="coinImage" src="https://assets.coingecko.com/coins/images/21245/small/VIS.PNG?1638768736">
+                            <div id="VISpriceUSD"></div>
+                        </li>
+                        <li>
+                            <img class="coinImage" src="https://s2.coinmarketcap.com/static/img/coins/64x64/13030.png">
+                            <div id="PGXpriceUSD"></div>
+                        </li>
                         <li>
                             <a href="calchistory.html">History</a>
                         </li>
