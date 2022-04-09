@@ -105,7 +105,7 @@ nav > div {
     margin-top: 60px;
     background-color: #c9356b25;
     display: inline-block;
-    width: 130px;
+    min-width: 130px;
 }
 
 h3 {
@@ -130,8 +130,6 @@ footer p {
 #calcHistoryTable {
     min-height: 515px;
 }
-
-
 
 /* ABOUT */
 .aboutTile img {

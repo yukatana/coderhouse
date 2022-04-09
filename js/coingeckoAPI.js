@@ -1,3 +1,5 @@
+//Coingecko API data fetching functions. Saved in their own file for organizational and reutilization purposes.
+
 const url = "https://api.coingecko.com/api/v3/coins"
 
 let VISprice
@@ -7,6 +9,8 @@ function getPrices() {
     getVIS()
     getPGX()
 }
+
+//VIS data fetch:
 
 const getVIS = async () =>{
     try {
@@ -23,6 +27,8 @@ const getVIS = async () =>{
         headerVISprice.innerHTML = "error"
     }
 }
+
+//PGX data fetch:
 
 const getPGX = async () =>{
     try {

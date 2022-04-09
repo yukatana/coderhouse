@@ -1,3 +1,5 @@
+//index page functions:
+
 function calcinit(){
     loadDOM()
     loadButtons()
@@ -13,31 +15,7 @@ function addToHistoryBtnFunction(){
     addToHistory()
 }
 
-function deleteHistoryButtonFunction() {
-    Swal.fire({
-        title: "Are you sure you want to delete your search history?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Delete",
-        cancelButtonText: "Cancel",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            calcHistory = []
-            localStorage.clear()
-            const tableContainer = document.getElementById("calcHistoryTable")
-            tableContainer.innerHTML = ""
-            createTable() //loads empty history table message
-
-            Swal.fire({
-                title: "Your history has been deleted!",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 2000
-            })
-        }
-    })
-
-}
+//declaration of necessarily global variables:
 
 let calcHistory = JSON.parse(localStorage.getItem("calcHistory")) || []
 let motherBreeds
@@ -53,10 +31,11 @@ let motherKind
 let fatherKind
 let bornPegaKind
 
-//class for constructing search history objects to go into the array
+//class for constructing search history objects to be unshifted into the array:
+
 class Search{
     constructor(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost){
-        this.calcDate = new Date //adds current date to every calculation
+        this.calcDate = new Date //adds current date to every calculation. however, the Date object is destroyed by JSON
         this.motherBreeds = motherBreeds
         this.motherVIScost = motherVIScost
         this.motherPGXcost = motherPGXcost
@@ -65,7 +44,7 @@ class Search{
         this.fatherPGXcost = fatherPGXcost
         this.totalVIScost = totalVIScost
         this.totalPGXcost = totalPGXcost
-        this.totalCost = totalCost // won't return USD value until API implementation
+        this.totalCost = totalCost //total USD cost of a breeding round
     }
 }
 
@@ -119,10 +98,10 @@ function calculate(){
     //to be displayed under PGX cost:
     totalPGXcost = motherPGXcost + fatherPGXcost
 
-    //to be displayed in USD under total cost (needs API):
-    !isNaN(motherVIScost) && !isNaN(fatherVIScost) ? totalCost = totalVIScost + totalPGXcost : totalCost = "Invalid calculation" 
+    //to be displayed in USD under total cost:
+    !isNaN(motherVIScost) && !isNaN(fatherVIScost) && !isNaN(PGXprice) && !isNaN(VISprice) ? totalCost = (totalVIScost*VISprice) + (totalPGXcost*PGXprice) : totalCost = "Invalid calculation" 
 
-    //in case of invalid calculation:
+    //calculation validation:
     isNaN(motherVIScost) || isNaN(fatherVIScost) ? Toastify({
         text: "Invalid calculation!",
         duration: 2000,
@@ -130,7 +109,7 @@ function calculate(){
         position: "center",
         stopOnFocus: true,
         style: {background: "#c9356c"},
-        offset: {y: 65}
+        offset: {y: 40}
       }).showToast() :
       Toastify({
         text: "Calculation successful",
@@ -139,7 +118,7 @@ function calculate(){
         position: "center",
         stopOnFocus: true,
         style: {background: "#c9356c"},
-        offset: {y: 65}
+        offset: {y: 40}
       }).showToast();
 
     // Kind calculation:
@@ -182,14 +161,15 @@ function calculate(){
 
 
 //Add to history button:
-function addToHistory() //will use JSON in order to save calcHistory to localStorage
+
+function addToHistory() //uses JSON in order to save calcHistory to localStorage
 {
     const messageContainer = document.getElementById("messageContainer")
     messageContainer.innerHTML = ""
 
     if (!isNaN(totalCost))
     {
-        calcHistory.push(new Search(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, totalCost))
+        calcHistory.unshift(new Search(motherBreeds, motherVIScost, motherPGXcost, fatherBreeds, fatherVIScost, fatherPGXcost, totalVIScost, totalPGXcost, parseFloat(totalCost.toFixed(2))))
         localStorage.setItem("calcHistory", JSON.stringify(calcHistory))
 
         Toastify({
@@ -199,7 +179,7 @@ function addToHistory() //will use JSON in order to save calcHistory to localSto
             position: "center",
             stopOnFocus: true,
             style: {background: "#c9356c"},
-            offset: {y: 65}
+            offset: {y: 40}
           }).showToast();
     }
     else
@@ -211,13 +191,14 @@ function addToHistory() //will use JSON in order to save calcHistory to localSto
             position: "center",
             stopOnFocus: true,
             style: {background: "#c9356c"},
-            offset: {y: 65}
+            offset: {y: 40}
           }).showToast();
     }
 }
 
 
 //Calculation DOM display:
+
 function loadDOM()
 {
     if (motherBreeds !== undefined || fatherBreeds !== undefined)
@@ -227,9 +208,14 @@ function loadDOM()
 
         const VISCostTile = document.getElementById("VISCostTile")
         VISCostTile.innerText =`${motherVIScost} | ${fatherVIScost}`
+        
+        const VIScostUSD = (motherVIScost+fatherVIScost)*VISprice
+        const PGXcostUSD = (motherPGXcost+fatherPGXcost)*PGXprice
 
         const totalCostTile = document.getElementById("totalCostTile")
-        totalCostTile.innerText =`${totalCost}`
+        totalCostTile.innerText =`${totalCost.toFixed(2)} USD
+        (${VIScostUSD.toFixed(2)} USD of VIS
+        ${PGXcostUSD.toFixed(2)} USD of PGX)`
 
         const pegaKindTile = document.getElementById("pegaKindTile")
         pegaKindTile.innerText = `${bornPegaKind}`
@@ -243,7 +229,7 @@ function loadDOM()
         VISCostTile.innerText =`0`
 
         const TotalCostTile = document.getElementById("totalCostTile")
-        TotalCostTile.innerText =`0`
+        TotalCostTile.innerHTML =`0<br><br><br>`
 
         const pegaKindTile = document.getElementById("pegaKindTile")
         pegaKindTile.innerText = `-`
@@ -263,7 +249,8 @@ function loadButtons(){
     addToHistoryBtn.onclick = () => {addToHistoryBtnFunction()}
 }
 
-//History page:
+//History page functions:
+
 function historyinit() {
     createTable()
     getPrices()
@@ -296,7 +283,7 @@ function createTable() {
         row.insertCell().innerHTML =`${el?.fatherBreeds}`
         row.insertCell().innerHTML =`${el?.fatherVIScost}`
         row.insertCell().innerHTML =`${el?.totalPGXcost}`
-        row.insertCell().innerHTML =`${el?.totalCost}`})
+        row.insertCell().innerHTML =`${el?.totalCost} USD`})
 
         const deleteHistoryButtonContainer = document.createElement("div")
             deleteHistoryButtonContainer.className ="text-center"
@@ -317,30 +304,48 @@ function createTable() {
     }
 }
 
-//About page:
+//Delete history button:
+
+function deleteHistoryButtonFunction() {
+    Swal.fire({
+        title: "Are you sure you want to delete your search history?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            calcHistory = []
+            localStorage.clear()
+            const tableContainer = document.getElementById("calcHistoryTable")
+            tableContainer.innerHTML = ""
+            createTable() //loads empty history table message
+
+            Swal.fire({
+                title: "Your history has been deleted!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000
+            })
+        }
+    })
+
+}
+
+//About page functions:
+
 function aboutinit() {
     getPrices()
 }
 
 
 
+//deprecated functions:
 
-console.table(calcHistory) //displays entire calc history as an array at the end of the cycle
-
-//logs new array in ascending totalCost order
-
-// let sortedHistory = calcHistory
-// console.table(sortedHistory.sort((a,b) => a.totalCost - b.totalCost)) 
-
-function filterByDate() //logs new array containing desired search date. must be called manually
+function filterByDate() //logs new array containing desired search date. must be called manually. not implemented due to lack of practical use
 {
     let filterQuery = prompt("Enter calculation date to be filtered (i.e.: Jan 01):")
     calcHistory.forEach(el => el.calcDate = el?.calcDate.toString())
     const filterResult = calcHistory.filter((el) => el?.calcDate.includes(filterQuery))
     console.table(filterResult)
-}
-
-function sumAll() //logs sum of all calculations from calcHistory, considering totalCost
-{
-    return calcHistory.reduce((acc, el) => acc + el?.totalCost, 0)
 }
